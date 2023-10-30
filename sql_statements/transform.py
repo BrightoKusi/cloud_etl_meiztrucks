@@ -1,17 +1,7 @@
 
-dim_dates = '''
-    INSERT INTO staging.dim_dates (
-        date
-        , year
-        , month
-        , quarter
-    )
-    SELECT t.date, EXTRACT(YEAR FROM t.date), EXTRACT(MONTH FROM t.date), EXTRACT(QUARTER FROM t.date) FROM raw_data.transactions t;
-'''
-
 dim_banks = '''
     INSERT INTO staging.dim_banks(
-    _id
+    bank_id
     , code
     , name
     )
@@ -20,7 +10,7 @@ dim_banks = '''
 
 dim_customers = '''
     INSERT INTO staging.dim_customers(
-    id
+    customer_id
     ,name
     ,email
     ,registered_at
@@ -31,7 +21,7 @@ dim_customers = '''
 
 dim_items = '''
 INSERT INTO staging.dim_items(
-    id
+    customer_id
     ,name
     ,selling_price
     ,cost_price
@@ -39,11 +29,20 @@ INSERT INTO staging.dim_items(
     SELECT i.id , i.name, i.selling_price, i.cost_price FROM raw_data.items i;
 '''
 
+dim_dates = '''
+    INSERT INTO staging.dim_dates (
+        date
+        , year
+        , month
+        , quarter
+    )
+    SELECT t.date, EXTRACT(YEAR FROM t.date), EXTRACT(MONTH FROM t.date), EXTRACT(QUARTER FROM t.date) FROM raw_data.transactions t;
+'''
+
 ft_transactions = '''
 INSERT INTO staging.ft_transactions
 (
-    id
-    ,item_id
+    item_id
     ,customer_id
     ,bank_id
     ,selling_price
