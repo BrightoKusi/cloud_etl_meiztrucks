@@ -53,13 +53,16 @@ transformed_schema = 'transformed_data'
 
 dim_banks = '''CREATE TABLE IF NOT EXISTS staging.dim_banks
 (
-    _id VARCHAR PRIMARY KEY NOT NULL ,
+    id BIGINT IDENTITY(1, 1),
+    bank_id VARCHAR PRIMARY KEY NOT NULL ,
     code INTEGER,
     name VARCHAR
 );'''
 
+
 dim_customers = '''CREATE TABLE IF NOT EXISTS staging.dim_customers(
-    id INTEGER PRIMARY KEY NOT NULL,
+    id BIGINT IDENTITY(1, 1),
+    customer_id INTEGER PRIMARY KEY NOT NULL,
     name VARCHAR,
     email VARCHAR,
     registered_at TIMESTAMP,
@@ -67,7 +70,8 @@ dim_customers = '''CREATE TABLE IF NOT EXISTS staging.dim_customers(
 
 
 dim_items = '''CREATE TABLE IF NOT EXISTS staging.dim_items(
-id INTEGER,
+id BIGINT IDENTITY(1, 1),
+item_id INTEGER,
 name VARCHAR,
 selling_price NUMERIC,
 cost_price NUMERIC); '''
@@ -75,6 +79,7 @@ cost_price NUMERIC); '''
 
 
 dim_dates = '''CREATE TABLE IF NOT EXISTS staging.dim_dates(
+    id BIGINT IDENTITY(1, 1),
     date DATE,
     year INTEGER,
     month INTEGER,
@@ -82,7 +87,7 @@ dim_dates = '''CREATE TABLE IF NOT EXISTS staging.dim_dates(
 );'''
 
 ft_transactions = '''CREATE TABLE IF NOT EXISTS staging.ft_transactions(
-    id INTEGER PRIMARY KEY NOT NULL,
+    id BIGINT IDENTITY(1, 1),
     item_id INTEGER,
     customer_id INTEGER,
     bank_id  VARCHAR,
